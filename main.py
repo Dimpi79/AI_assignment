@@ -141,7 +141,7 @@ Handbook excerpts:
 
     answer_text = response.output_text.strip()
 
-    # If the model refuses, mark the answer unsupported
+    
     if "I don't know" in answer_text:
         return {
             "answer": "I don't know. The handbook does not cover this.",
@@ -149,7 +149,7 @@ Handbook excerpts:
             "supported": False
         }
 
-    # Citations come from retrieved filenames, not from the LLM
+    
     citations = list(dict.fromkeys(
         result["source"] for result in retrieved
     ))
