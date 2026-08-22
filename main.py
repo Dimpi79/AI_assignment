@@ -96,7 +96,6 @@ def answer(question, vectorizer, matrix, chunks):
         chunks
     )
 
-    # Refuse if retrieval finds no sufficiently relevant evidence
     if not retrieved or retrieved[0]["score"] < RETRIEVAL_THRESHOLD:
         return {
             "answer": "I don't know. The handbook does not cover this.",
@@ -162,10 +161,6 @@ Handbook excerpts:
     }
 
 
-# ============================================================
-# Task 2: Inspect Retrieval
-# ============================================================
-
 def test_retrieval(vectorizer, matrix, chunks):
     test_questions = [
         "What is the DIM divisor for international shipments?",
@@ -191,11 +186,6 @@ def test_retrieval(vectorizer, matrix, chunks):
             print(f"\n{i}. {result['source']}")
             print(f"Score: {result['score']:.4f}")
             print(f"Text: {result['text'][:300]}...")
-
-
-# ============================================================
-# Task 4: Evaluation
-# ============================================================
 
 def evaluate(vectorizer, matrix, chunks):
     with open(QUESTIONS_FILE, "r", encoding="utf-8") as file:
@@ -224,25 +214,18 @@ def evaluate(vectorizer, matrix, chunks):
         print(f"Citations: {result['citations']}")
         print(f"Supported: {result['supported']}")
 
-        # Basic evaluation
         expected = item.get("expected_answer", "")
 
         if expected:
             expected_lower = expected.lower()
             answer_lower = result["answer"].lower()
 
-            # Manual-style keyword check for simple factual answers
             if expected_lower in answer_lower:
                 correct += 1
 
     print("\n" + "=" * 70)
     print(f"Evaluation result: {correct}/{len(questions)}")
     print("=" * 70)
-
-
-# ============================================================
-# Main
-# ============================================================
 
 def main():
     print("Loading documents...")
@@ -263,14 +246,12 @@ def main():
 
     print("Index built successfully.")
 
-    # Task 2
     test_retrieval(
         vectorizer,
         matrix,
         chunks
     )
 
-    # Task 4
     evaluate(
         vectorizer,
         matrix,
