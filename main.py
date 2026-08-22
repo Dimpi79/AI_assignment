@@ -5,7 +5,7 @@ from urllib import response
 
 from dotenv import load_dotenv
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwaise import cosine_similarity
+from sklearn.metrics.pairwise import cosine_similarity
 from openai import OpenAI
 
 CORPUS_DIR = Path("corpus")
@@ -279,9 +279,5 @@ def main():
 
 
 if __name__ == "__main__":
-    response = client.response.create(
-        model="gpt-4.1-mini",
-        input="Say hello in one sentence."
-    )
-    print(response.output_text)
+    main()
    
